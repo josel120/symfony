@@ -1,3 +1,25 @@
 user_homepage:
     path:     /
     defaults: { _controller: UserBundle:Default:index }
+
+user_index:
+    path: /user/index
+    defaults: { _controller: UserBundle:User:index }
+
+user_add:
+    path: /user/add
+    defaults: { _controller: UserBundle:User:add }
+
+user_edit:
+    path: /user/edit/{id}
+    defaults: { _controller: UserBundle:User:edit }
+
+user_view:
+    path: /user/view/{id}
+    defaults: { _controller: UserBundle:User:view }
+
+user_delete:
+    path: /user/index/{id}
+    defaults: { _controller: UserBundle:User:delete }
+
+    
