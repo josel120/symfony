@@ -10,7 +10,15 @@ class UserController extends Controller
 {
     public function indexAction()
     {
-        return new Response('Hola newbie');
+        $em = $this -> getDoctrine()->getManager();
+        $users = $em->getRepository('UserBundle:User')->findAll();
+        $res = 'Lista de usuarios: <br />';
+
+        foreach($users as $user)
+        {
+            $res .= 'Usuario: '. $user->getUsername(). '- Email: '.$user->getEmail().'<br />';
+        }
+        return new Response($res);
     }
     public function addAction()
     {
@@ -22,7 +30,11 @@ class UserController extends Controller
     }
     public function viewAction($id)
     {
-        return new Response('Hola detalles '.$id);
+        $em = $this -> getDoctrine()->getManager();
+        $repository = $em->getRepository('UserBundle:User');
+        $user = $repository->find($id);
+
+        return new Response('Usuario: '.$user->getUsername(). '- Email: '.$user->getEmail().'<br />');
     }
     public function deleteAction($id)
     {
