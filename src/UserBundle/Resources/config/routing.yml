@@ -3,7 +3,7 @@ user_homepage:
     defaults: { _controller: UserBundle:Default:index }
 
 user_index:
-    path: /user/index
+    path: /user
     defaults: { _controller: UserBundle:User:index }
 
 user_add:
@@ -19,7 +19,7 @@ user_view:
     defaults: { _controller: UserBundle:User:view }
 
 user_delete:
-    path: /user/index/{id}
+    path: /user/delete/{id}
     defaults: { _controller: UserBundle:User:delete }
 
     
