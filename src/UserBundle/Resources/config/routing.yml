@@ -1,0 +1,30 @@
+user_homepage:
+    path:     /
+    defaults: { _controller: UserBundle:Default:index }
+
+user_index:
+    path: /user
+    defaults: { _controller: UserBundle:User:index }
+
+user_add:
+    path: /user/add
+    defaults: { _controller: UserBundle:User:add }
+
+user_create:
+    path: /user/create
+    defaults: { _controller: UserBundle:User:create }
+    methods: POST
+
+user_edit:
+    path: /user/edit/{id}
+    defaults: { _controller: UserBundle:User:edit }
+
+user_view:
+    path: /user/view/{id}
+    defaults: { _controller: UserBundle:User:view }
+
+user_delete:
+    path: /user/delete/{id}
+    defaults: { _controller: UserBundle:User:delete }
+
+    
