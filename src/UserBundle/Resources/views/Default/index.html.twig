@@ -1,1 +1,14 @@
-Hello World!
+{% extends 'layout.html.twig' %}
+      
+{% block body %}
+    {{ parent() }}
+    <div class="main container">
+        <div class="row well">
+            <div class="col-md-6">
+                <div class="page-header">
+                    <h2>New user</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
