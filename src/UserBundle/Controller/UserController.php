@@ -11,11 +11,11 @@ use UserBundle\Form\UserType;
 
 class UserController extends Controller
 {
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this -> getDoctrine()->getManager();
-        $users = $em->getRepository('UserBundle:User')->findAll();
-        $res = 'Lista de usuarios: <br />';
+        //$users = $em->getRepository('UserBundle:User')->findAll();
+        //$res = 'Lista de usuarios: <br />';
         /*
         foreach($users as $user)
         {
@@ -24,7 +24,15 @@ class UserController extends Controller
         return new Response($res);
         */
 
-        return $this->render('UserBundle:User:index.html.twig',array('users' => $users));
+        $dql = "SELECT u FROM UserBundle:User u";
+        $users = $em->createQuery($dql);
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $users,$request->query->getInt('page',1),
+            3
+        );
+        
+        return $this->render('UserBundle:User:index.html.twig',array('pagination' => $pagination));
     }
     public function addAction()
     {
