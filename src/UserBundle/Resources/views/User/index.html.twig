@@ -8,7 +8,9 @@
 				<h2 class="padding-none">Users</h2>
 			</div>
 			<div class="table-responsive">
-			 Total Records: {{ pagination.getTotalItemCount }}
+				<p>
+ 					{{ pagination.getTotalItemCount }}
+				</p>
 				<table class="table table-striped table-hover">
 					<thead>
 						<tr>
@@ -43,8 +45,8 @@
 			                            view
 			                        </a>
 
-			                        <a href="#" class="btn btn-sm btn-primary">
-			                            edit
+			                       	<a href="{{ path('user_edit', { id: user.id }) }}" class="btn btn-sm btn-primary">
+										edit
 			                        </a>
 
 			                        <a href="#" class="btn btn-sm btn-danger btn-delete">

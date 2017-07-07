@@ -38,7 +38,6 @@ class User implements UserInterface
     /**
      * @var string
      *
-     * @Assert\NotBlank()
      * @ORM\Column(name="first_name", type="string", length=100)
      */
     private $firstName;
