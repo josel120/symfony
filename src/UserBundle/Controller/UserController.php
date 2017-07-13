@@ -6,6 +6,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\FormError;
 use UserBundle\Entity\User;
 use UserBundle\Form\UserType;
 
@@ -71,7 +73,7 @@ class UserController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($user);
                 $em->flush();
-                
+
                 return $this->redirectToRoute('user_index');                
             }
             else
@@ -100,13 +102,15 @@ class UserController extends Controller
         return $this->render('UserBundle:User:edit.html.twig', array('user' => $user, 'form' => $form->createView()));
         
     }
+
     private function createEditForm(User $entity)
     {
         $form = $this->createForm(new UserType(), $entity, array('action' => $this->generateUrl('user_update', array('id' => $entity->getId())), 'method' => 'PUT'));
         
         return $form;
     }
-     public function updateAction($id, Request $request)
+
+    public function updateAction($id, Request $request)
     {
         $em = $this->getDoctrine()->getManager();
         
@@ -165,11 +169,43 @@ class UserController extends Controller
         $em = $this -> getDoctrine()->getManager();
         $repository = $em->getRepository('UserBundle:User');
         $user = $repository->find($id);
+        
+        if(!$user){
+            throw $this->createNotFoundException('User not found.');
+        }
 
-        return new Response('Usuario: '.$user->getUsername(). '- Email: '.$user->getEmail().'<br />');
+        $deleteForm = $this->createDeleteForm($user);
+
+        return $this->render('UserBundle:User:view.html.twig', array('user' => $user, 'delete_form' => $deleteForm->createView()));
+
     }
-    public function deleteAction($id)
+
+    private function createDeleteForm($user){
+        return $this->createFormBuilder()
+            ->setAction($this->generateUrl('user_delete', array('id' => $user->getId())))
+            ->setMethod('DELETE')
+            ->getForm();
+    }
+    public function deleteAction(Request $request,  $id)
     {
-        return new Response('Hola eliminar  '.$id);
+        $em = $this -> getDoctrine()->getManager();
+        $repository = $em->getRepository('UserBundle:User');
+        $user = $repository->find($id);
+
+        if(!$user){
+            throw $this->createNotFoundException('User not found.');
+        }
+
+        $form = $this->createDeleteForm($user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $em->remove($user);
+            $em->flush();
+
+            $this->addFlash('mensaje', 'The user has been deleted.');
+            return $this->redirectToRoute('user_index');
+        }
     }
 }
