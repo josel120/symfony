@@ -1,4 +1,17 @@
 {{ form_start(form) }}
     {{ form_widget(form) }}
-        <input type="submit" value="{{ 'Delete User' }}" class="btn btn-lg btn-block btn-danger" onclick="return confirm('Desea eliminar?');" />
+        <input type="button" value="{{ 'Delete User' }}" class="btn btn-lg btn-block btn-danger" onclick="confirmDelete()" />
 {{ form_end(form) }}
+
+<script>
+    
+    function confirmDelete()
+    {
+        bootbox.confirm('Desea eliminar?', function(result) {
+            if(result == true)
+            {
+                document.form.submit();
+            }
+        });
+    }
+</script>
