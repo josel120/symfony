@@ -4,6 +4,8 @@ namespace UserBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * User
@@ -11,6 +13,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="UserBundle\Repository\UserRepository")
  * @ORM\HasLifecycleCallbacks()
+ * @UniqueEntity("username")
+ * @UniqueEntity("email")
  */
 class User implements UserInterface
 {
@@ -26,6 +30,7 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="username", type="string", length=50)
      */
     private $username;
@@ -33,6 +38,7 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="first_name", type="string", length=100)
      */
     private $firstName;
@@ -40,6 +46,7 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="last_name", type="string", length=100)
      */
     private $lastName;
@@ -47,6 +54,8 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @Assert\NotBlank()
+     * @Assert\Email()
      * @ORM\Column(name="email", type="string", length=100)
      */
     private $email;
@@ -54,6 +63,7 @@ class User implements UserInterface
     /**
      * @var string
      *
+     
      * @ORM\Column(name="password", type="string", length=50)
      */
     private $password;
@@ -61,6 +71,8 @@ class User implements UserInterface
     /**
      * @var string
      *
+     * @Assert\Choice(choices = {"ROLE_ADMIN", "ROLE_USER"})
+     * @Assert\NotBlank()
      * @ORM\Column(name="role", type="string", columnDefinition="ENUM('ROLE_ADMIN','ROLE_USER')", length=255)
      */
     private $role;
