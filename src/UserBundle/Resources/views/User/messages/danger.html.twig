@@ -1,10 +1,10 @@
 {% if flashMessage is not defined %}
-	<div class="alert alert-success hidden" id="message" role="alert">
-		<span id="user-message"></span>
+	<div class="alert alert-danger hidden" id="message-danger" role="alert">
+		<span id="user-message-danger"></span>
 	</div>
 {% endif %}
 {% for flashMessage in app.session.flashbag.get('mensaje') %}
-	<div class="alert alert-success" role="alert">
+	<div class="alert alert-danger" role="alert">
 		<div class="container"> {{ flashMessage }} </div>
 	</div>
 {% endfor %}
